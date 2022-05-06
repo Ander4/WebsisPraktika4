@@ -149,4 +149,14 @@ class Dropbox:
 
     def create_folder(self, path):
         print("/create_folder " + path)
-        # sartu kodea hemen
+        uri = "https://api.dropboxapi.com/2/files/create_folder_v2"
+        datuak = {'path': path}
+        datuak_json = json.dumps(datuak)
+
+        # Call Dropbox API
+        goiburuak = {'Host': 'api.dropboxapi.com',
+                     'Authorization': 'Bearer ' + self._access_token,
+                     'Content-Type': 'application/json'}
+        erantzuna = requests.post(uri, headers=goiburuak, data=datuak_json, allow_redirects=False)
+        status = erantzuna.status_code
+        print("\tStatus: " + str(status))
