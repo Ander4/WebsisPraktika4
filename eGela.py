@@ -64,7 +64,7 @@ class eGela:
         goiburuak = {'Host': 'egela.ehu.eus',
                      'Cookie': self._cookiea,
                      'Content-Type': "application/x-www-form-urlencoded"}
-        edukia = {'logintoken': logintoken, 'username': Username, 'password': Password}
+        edukia = {'logintoken': logintoken, 'username': username.get(), 'password': password.get()}
         print(metodoa + "\n")
         print(uria + "\n")
 
@@ -92,7 +92,7 @@ class eGela:
         # sartu kodea hemen
 
         metodoa = 'GET'
-        uria = "https://egela.ehu.eus/login/index.php?testsession=" + testsession
+        uria = "https://egela.ehu.eus/login/index.php?testsession=" + locationTestSession
         goiburuak = {'Host': 'egela.ehu.eus', 'Cookie': self._cookiea, 'Content-Type': 'application/x-www-form-urlencoded'}
 
         print(metodoa + "\n")
@@ -150,11 +150,14 @@ class eGela:
         time.sleep(0.1)
         popup.destroy()
 
+        edukia_Str = erantzuna.text
         print("\n##### LOGIN EGIAZTAPENA #####")
-        if LOGIN_EGIAZTAPENA:
+        aurkituta = edukia_Str.find("Saio-hasiera baliogabea, saiatu berriz, mesedez")
+        if aurkituta == -1:
             # sartu kodea hemen
-
+            self._login = 1
             # KLASEAREN ATRIBUTUAK EGUNERATU
+            print("LOGIN CORRECT")
             self._root.destroy()
             # sartu kodea hemen
 
@@ -184,13 +187,15 @@ class eGela:
         edukia = erantzuna.content
 
         self._refs = []
+        soup = BeautifulSoup(edukia, 'html.parser')
+
         item_results = soup.find_all('img', {'class': 'iconlarge activityicon'})
         for each in item_results:
             if each['src'].find("/pdf") != -1:
                 print("\nPDF-dun linka aurkitu da:")
                 pdf_link = each.parent['href']
                 uria = pdf_link
-                headers = {'Host': 'egela.ehu.eus', 'Cookie': cookie}
+                headers = {'Host': 'egela.ehu.eus', 'Cookie': self._cookiea}
                 erantzuna = requests.get(uria, headers=headers, allow_redirects=False)
                 print("GET " + uria)
                 kodea = erantzuna.status_code
@@ -230,11 +235,11 @@ class eGela:
         goiburuak = {'Host': 'egela.ehu.eus', 'Cookie': self._cookiea, 'Content-Type': 'application/x-www-form-urlencoded'}
 
         erantzuna = requests.request(metodoa, uria, headers=goiburuak, allow_redirects=False)
-        i += 1
+
         print("Deskargatzen ari den pdf-a: ", pdf_linka)
 
-        pdf = open("PDF" + pdf_name + ".pdf", 'wb')
-        pdf.write(erantzuna.content)
-        pdf.close()
+        pdf_file = open("PDF" + pdf_name + ".pdf", 'wb')
+        pdf_file.write(erantzuna.content)
+        pdf_file.close()
         print("DESKARGATUTA!!!")
         return pdf_name, pdf_file
