@@ -131,7 +131,18 @@ class Dropbox:
 
     def transfer_file(self, file_path, file_data):
         print("/upload " + file_path)
-        # sartu kodea hemen
+        uri = "https://content.dropboxapi.com/2/files/upload"
+        datuak = {'path': file_path, 'mode': 'add', 'autorename': True, 'mute': False, 'strict_conflict': False}
+        datuak_json = json.dumps(datuak)
+
+        # Call Dropbox API
+        goiburuak = {'Host': 'api.dropboxapi.com',
+                     'Authorization': 'Bearer ' + self._access_token,
+                     'Content-Type': 'application/json',
+                     'Dropbox-API-Arg': datuak}
+        erantzuna = requests.post(uri, headers=goiburuak, data=file_data, allow_redirects=False)
+        status = erantzuna.status_code
+        print("\tStatus: " + str(status))
 
     def delete_file(self, file_path):
         print("/delete_file " + file_path)
