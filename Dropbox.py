@@ -1,13 +1,13 @@
 import requests
 import urllib
 import webbrowser
-from socket import AF_INET, socket, SOCK_STREAM
+import socket
 import json
 import helper
 
 app_key = 'cteaexf730n96we'
 app_secret = 'qs7mufd0v82rncp'
-server_addr = "localhost"
+server_addr = "127.0.0.1"
 server_port = 8090
 redirect_uri = "http://" + server_addr + ":" + str(server_port)
 
