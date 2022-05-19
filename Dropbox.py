@@ -44,15 +44,11 @@ class Dropbox:
         print("auth_code: " + auth_code)
 
         # erabiltzaileari erantzun bat bueltatu
-        http_response = """\
-            HTTP/1.1 200 OK
-
-            <html> 
-            <head>
-            <title>Proba</title>
-            </head> 
-            <body> The authentication flow has completed. Close this window. </body> 
-            </html> """
+        http_response = "HTTP/1.1 200 OK\r\n\r\n" \
+                        "<html>" \
+                        "<head><title>Proba</title></head>" \
+                        "<body>The authentication flow has completed. Close this window.</body>" \
+                        "</html>"
         client_connection.sendall(str.encode(http_response))
         client_connection.close()
 
