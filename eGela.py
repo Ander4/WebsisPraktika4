@@ -238,7 +238,7 @@ class eGela:
 
         print("Deskargatzen ari den pdf-a: ", pdf_linka)
 
-        pdf_file = open("PDF" + pdf_name + ".pdf", 'wb')
+        pdf_file = open(pdf_name, 'wb')
         pdf_file.write(erantzuna.content)
         pdf_file.close()
         print("DESKARGATUTA!!!")
