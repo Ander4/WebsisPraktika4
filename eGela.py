@@ -235,6 +235,7 @@ class eGela:
         goiburuak = {'Host': 'egela.ehu.eus', 'Cookie': self._cookiea, 'Content-Type': 'application/x-www-form-urlencoded'}
 
         erantzuna = requests.request(metodoa, uria, headers=goiburuak, allow_redirects=False)
+        pdf_data = erantzuna.content
 
         print("Deskargatzen ari den pdf-a: ", pdf_linka)
 
@@ -242,4 +243,5 @@ class eGela:
         pdf_file.write(erantzuna.content)
         pdf_file.close()
         print("DESKARGATUTA!!!")
-        return pdf_name, pdf_file
+        return pdf_name, pdf_data
+        #return pdf_name, pdf_file

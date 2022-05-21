@@ -126,19 +126,16 @@ class Dropbox:
                 self._files = helper.update_listbox2(msg_listbox, self._path, edukia_json_entries)
 
     def transfer_file(self, file_path, file_data):
-        print("/upload " + file_path)
+        print("/upload" + file_path)
         uri = "https://content.dropboxapi.com/2/files/upload"
         datuak = {'path': file_path, 'mode': 'add', 'autorename': True, 'mute': False, 'strict_conflict': False}
         datuak_json = json.dumps(datuak)
-
-        # Call Dropbox API
-        goiburuak = {'Host': 'api.dropboxapi.com',
-                     'Authorization': 'Bearer ' + self._access_token,
-                     'Content-Type': 'application/json',
-                     'Dropbox-API-Arg': datuak}
+        goiburuak = {'Host': 'content.dropboxapi.com', 'Authorization': 'Bearer ' + self._access_token,
+                     'Dropbox-API-Arg': datuak_json, 'Content-Type': 'application/octet-stream'}
         erantzuna = requests.post(uri, headers=goiburuak, data=file_data, allow_redirects=False)
         status = erantzuna.status_code
-        print("\tStatus: " + str(status))
+        print("Status: ")
+        print(str(status))
 
     def delete_file(self, file_path):
         print("/delete_file " + file_path)
