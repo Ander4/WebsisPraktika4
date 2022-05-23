@@ -123,6 +123,7 @@ class Dropbox:
             print("\n\t ############ FITXATEGIEN ZERRENDA ############\n")
             for izena in edukia_json['entries']:
                 print(izena['name'] + "\n")
+                edukia_json_entries.append(izena)
                 self._files = helper.update_listbox2(msg_listbox, self._path, edukia_json_entries)
 
     def transfer_file(self, file_path, file_data):
