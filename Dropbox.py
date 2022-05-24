@@ -91,14 +91,10 @@ class Dropbox:
         self._root.destroy()
 
     def list_folder(self, msg_listbox, cursor="", edukia_json_entries=[]):
-        if self._path == '/':
-            path = ""
-        else:
-            path = self._path
         if not cursor:
             print("/list_folder")
             uri = "https://api.dropboxapi.com/2/files/list_folder"
-            datuak = {'path': path}
+            datuak = {'path': ''}
             # sartu kodea hemen
         else:
             print("/list_folder/continue")

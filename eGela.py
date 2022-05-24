@@ -164,6 +164,7 @@ class eGela:
         else:
             tkMessageBox.showinfo("Alert Message", "Login incorrect!")
 
+
     def get_pdf_refs(self):
         popup, progress_var, progress_bar = helper.progress("get_pdf_refs", "Downloading PDF list...")
         progress = 0
@@ -190,8 +191,13 @@ class eGela:
         soup = BeautifulSoup(edukia, 'html.parser')
 
         item_results = soup.find_all('img', {'class': 'iconlarge activityicon'})
+
+
+
         for each in item_results:
+
             if each['src'].find("/pdf") != -1:
+
                 print("\nPDF-dun linka aurkitu da:")
                 pdf_link = each.parent['href']
                 uria = pdf_link
@@ -210,14 +216,11 @@ class eGela:
                 hizt = {pdf_link, pdf_izena}
                 self._refs.append({'pdf-name': pdf_izena, 'pdf-link': pdf_link})
 
-        progress_step = float(100.0 / len(self._refs))
-
-
-        progress += progress_step
-        progress_var.set(progress)
-        progress_bar.update()
-        time.sleep(0.1)
-
+                progress_step = float(100.0 / len(self._refs))
+                progress += progress_step
+                progress_var.set(progress)
+                progress_bar.update()
+                time.sleep(0.1)
 
 
         print(self._refs)
