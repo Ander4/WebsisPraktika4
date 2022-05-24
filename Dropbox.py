@@ -121,14 +121,17 @@ class Dropbox:
 
         edukia_json = json.loads(edukia)
         if edukia_json['has_more']:
-            # sartu kodea hemen
+            if edukia_json_entries:
+                edukia_json_entries = edukia_json_entries + edukia_json['entries']
+            else:
+                edukia_json_entries = edukia_json['entries']
             self.list_folder(msg_listbox, edukia_json['cursor'], edukia_json_entries)
         else:
-            print("\n\t ############ FITXATEGIEN ZERRENDA ############\n")
-            for izena in edukia_json['entries']:
-                print(izena['name'] + "\n")
-                edukia_json_entries.append(izena)
-                self._files = helper.update_listbox2(msg_listbox, self._path, edukia_json_entries)
+            if edukia_json_entries:
+                edukia_json_entries = edukia_json_entries + edukia_json['entries']
+            else:
+                edukia_json_entries = edukia_json['entries']
+            self._files = helper.update_listbox2(msg_listbox, self._path, edukia_json_entries)
 
     def transfer_file(self, file_path, file_data):
         print("/upload" + file_path)
